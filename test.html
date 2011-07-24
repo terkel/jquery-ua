@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>jQuery UA Plugin</title>
+<style>
+tr:nth-child(odd) { background-color: #f0f0f0; }
+th, td { line-height: 1.5em; padding: 0 0.5em; text-align: left; vertical-align: baseline; }
+</style>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+<script src="jquery.ua.js"></script>
+<script>
+$(function () {
+    var html = [],
+        obj,
+        prop;
+    html.push('<p><code>' + navigator.userAgent + '</code></p>');
+    html.push('<table><tbody>');
+    for (obj in $.ua) {
+        for (prop in $.ua[obj]) {
+            html.push('<tr><th><code>$.ua.' + obj + '.' + prop + '</code></th><td><code>' + $.ua[obj][prop] + '</code></td></tr>');
+        }
+    }
+    html.push('</tbody></table>');
+    $('#test').html(html.join(''));
+});
+</script>
+</head>
+<body>
+<div id="test"></div>
+</body>
+</html>
