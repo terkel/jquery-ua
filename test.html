@@ -9,12 +9,14 @@ th, td { line-height: 1.5em; padding: 0 0.5em; text-align: left; vertical-align:
 </style>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
 <script src="jquery.ua.js"></script>
-<script>
+<script type="text/javascript">
 $(function () {
     var html = [],
         obj,
         prop;
+    html.push('<h2><code>navigator.userAgent</code></h2>');
     html.push('<p><code>' + navigator.userAgent + '</code></p>');
+    html.push('<h2><code>$.ua</code></h2>');
     html.push('<table><tbody>');
     for (obj in $.ua) {
         for (prop in $.ua[obj]) {
@@ -22,6 +24,8 @@ $(function () {
         }
     }
     html.push('</tbody></table>');
+    html.push('<h2>Classes added to the <code>html</code> element</h2>');
+    html.push('<p><code>' + $('html')[0].className + '</code></p>')
     $('#test').html(html.join(''));
 });
 </script>
