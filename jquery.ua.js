@@ -9,20 +9,18 @@
  */
 (function ($) {
 
-    $.ua = $.ua || {
-        platform: {},
-        browser: {},
-        engine: {}
-    };
+    $.ua = $.ua || {};
 
     var ua = navigator.userAgent.toLowerCase(),
-        p = $.ua.platform,
-        b = $.ua.browser,
-        e = $.ua.engine;
+        p = $.ua.platform = {},
+        b = $.ua.browser = {},
+        e = $.ua.engine = {};
 
     // detect platform
-    p.name = (/(win|mac|linux|iphone|ipod|android)/.exec(ua) || [, 'unknown'])[1];
+    p.name = (/(win|mac|linux|ipad|iphone|ipod|android|blackberry)/.exec(ua) || [, 'unknown'])[1];
     p[p.name] = true;
+    p.mobile = (/(mobile|phone)/.test(ua) || p.blackberry);
+    p.tablet = (/tablet/.test(ua) || p.ipad || (p.android && !/mobile/.test(ua)));
 
     // detect browser
     b.name = (/(msie|firefox|chrome|safari|opera)/.exec(ua) || [, 'unknown'])[1]; // chrome must be tested before safari
