@@ -2,31 +2,33 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
 <title>jQuery UA Plugin</title>
 <style>
 tr:nth-child(odd) { background-color: #f0f0f0; }
 th, td { line-height: 1.5em; padding: 0 0.5em; text-align: left; vertical-align: baseline; }
 </style>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
-<script src="jquery.ua.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+<script src="jquery.ua.js"></script>
 <script type="text/javascript">
 $(function () {
     var html = [],
-        obj,
-        prop;
-    html.push('<h2><code>navigator.userAgent</code></h2>');
-    html.push('<p><code>' + navigator.userAgent + '</code></p>');
-    html.push('<h2><code>$.ua</code></h2>');
-    html.push('<table><tbody>');
-    for (obj in $.ua) {
-        for (prop in $.ua[obj]) {
-            html.push('<tr><th><code>$.ua.' + obj + '.' + prop + '</code></th><td><code>' + $.ua[obj][prop] + '</code></td></tr>');
+        i,
+        j;
+    html[html.length] = '<h2><code>navigator.userAgent</code></h2>';
+    html[html.length] = '<p><code>' + navigator.userAgent + '</code></p>';
+    html[html.length] = '<h2><code>$.ua</code></h2>';
+    html[html.length] = '<table><tbody>';
+    for (i in $.ua) {
+        for (j in $.ua[i]) {
+            html[html.length] = '<tr><th><code>$.ua.' + i + '.' + j + '</code></th><td><code>' + $.ua[i][j] + '</code></td></tr>';
         }
     }
-    html.push('</tbody></table>');
-    html.push('<h2>Classes added to the <code>html</code> element</h2>');
-    html.push('<p><code>' + $('html')[0].className + '</code></p>')
+    html[html.length] = '</tbody></table>';
+    html[html.length] = '<h2>Classes added to the <code>html</code> element</h2>';
+    html[html.length] = '<p><code>' + $('html')[0].className + '</code></p>';
     $('#test').html(html.join(''));
+    
 });
 </script>
 </head>
