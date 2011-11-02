@@ -1,5 +1,5 @@
 /*
- * jQuery UA plugin v0.9.1
+ * jQuery UA plugin v0.9.2
  * https://github.com/terkel/jquery-ua
  *
  * Copyright (c) 2011 Takeru Suzuki
@@ -12,11 +12,9 @@
     $.ua = $.ua || {};
 
     var ua = navigator.userAgent.toLowerCase(),
-        p = $.ua.platform = {},
-        b = $.ua.browser = {},
-        e = $.ua.engine = {},
         platforms = [
             { name: 'win',        version: 'windows(?: nt)? ', versionNames: [
+                //{ number: '6.2',  name: 'win8' },
                 { number: '6.1',  name: 'win7' },
                 { number: '6.0',  name: 'winVista' },
                 { number: '5.2',  name: 'winXP' },
@@ -24,10 +22,10 @@
                 { number: '5.01', name: 'win2000' },
                 { number: '5.0',  name: 'win2000' }
             ]},
-            { name: 'mac',        version: 'os x ' },
-            { name: 'ipad',       version: 'cpu os ' },
-            { name: 'iphone',     version: 'iphone os ' },
+            { name: 'ipad',       version: 'cpu os ' }, // ipad and ipod must be tested before iphone
             { name: 'ipod',       version: 'iphone os ' },
+            { name: 'iphone',     version: 'iphone os ' }, // iphone must be tested before mac
+            { name: 'mac',        version: 'os x ' },
             { name: 'android',    version: 'android ' }, // android must be tested before linux
             { name: 'blackberry', version: '(?:blackberry\\d{4}[a-z]?|version)/' },
             { name: 'linux' }
@@ -44,20 +42,11 @@
             { name: 'webkit',  version: 'webkit/' }, // webkit must be tested before gecko
             { name: 'gecko',   version: 'rv:' },
             { name: 'presto',  version: 'presto/' }
-        ];
+        ],
+        p = $.ua.platform = detect(platforms),
+        b = $.ua.browser = detect(browsers),
+        e = $.ua.engine = detect(engines);
 
-    // detect platform
-    detect(p, platforms);
-    p.mobile = /(mobile|phone)/.test(ua) || p.blackberry;
-    p.tablet = /tablet/.test(ua) || p.ipad || (p.android && !/mobile/.test(ua));
-
-    // detect browser
-    detect(b, browsers);
-
-    // detect engine
-    detect(e, engines);
-
-    // add classes to html element
     $('html').addClass([
         p.name,
         p.versionName,
@@ -67,8 +56,9 @@
         e.name + e.versionMajor
     ].join(' '));
 
-    function detect (item, data) {
-        var i,
+    function detect (data) {
+        var item = {},
+            i,
             is,
             j,
             js;
@@ -78,6 +68,10 @@
                 item[item.name] = true;
                 item.version = String((new RegExp(data[i].version + '(\\d+((\\.|_)\\d+)*)').exec(ua) || [, 0])[1]).replace(/_/g, '.');
                 item.versionMajor = parseInt(item.version, 10);
+                if (data === platforms) {
+                    item.mobile = /mobile|phone/.test(ua) || item.blackberry;
+                    item.tablet = /tablet/.test(ua) || item.ipad || (item.android && !/mobile/.test(ua));
+                }
                 if (data[i].versionNames) {
                     for (j = 0, js = data[i].versionNames.length; j < js; j++) {
                         if (item.version === data[i].versionNames[j].number) {
@@ -96,6 +90,7 @@
             item.version = '';
             item.versionMajor = '';
         }
+        return item;
     }
 
 })(jQuery);
