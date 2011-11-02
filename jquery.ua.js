@@ -58,24 +58,26 @@
 
     function detect (data) {
         var item = {},
+            c,
             i,
             is,
             j,
             js;
         for (i = 0, is = data.length; i < is; i++) {
-            if (new RegExp(data[i].name).test(ua)) {
-                item.name = data[i].name;
+            c = data[i];
+            if (new RegExp(c.name).test(ua)) {
+                item.name = c.name;
                 item[item.name] = true;
-                item.version = String((new RegExp(data[i].version + '(\\d+((\\.|_)\\d+)*)').exec(ua) || [, 0])[1]).replace(/_/g, '.');
+                item.version = String((new RegExp(c.version + '(\\d+((\\.|_)\\d+)*)').exec(ua) || [, 0])[1]).replace(/_/g, '.');
                 item.versionMajor = parseInt(item.version, 10);
                 if (data === platforms) {
                     item.mobile = /mobile|phone/.test(ua) || item.blackberry;
                     item.tablet = /tablet/.test(ua) || item.ipad || (item.android && !/mobile/.test(ua));
                 }
-                if (data[i].versionNames) {
-                    for (j = 0, js = data[i].versionNames.length; j < js; j++) {
-                        if (item.version === data[i].versionNames[j].number) {
-                            item.versionName = data[i].versionNames[j].name;
+                if (c.versionNames) {
+                    for (j = 0, js = c.versionNames.length; j < js; j++) {
+                        if (item.version === c.versionNames[j].number) {
+                            item.versionName = c.versionNames[j].name;
                             item[item.versionName] = true;
                             break;
                         }
