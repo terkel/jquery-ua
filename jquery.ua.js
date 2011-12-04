@@ -2,10 +2,10 @@
  * jQuery UA plugin v0.9.2
  * https://github.com/terkel/jquery-ua
  *
- * Copyright (c) 2011 Takeru Suzuki
- * Dual licensed under the MIT and GPL licenses.
+ * Copyright (c) 2011 Takeru Suzuki, http://terkel.jp/
+ * Licensed under the MIT license: http://www.opensource.org/licenses/MIT
  *
- * Inspired by PPK's Browser Detect http://www.quirksmode.org/js/detect.html
+ * Inspired by PPK's Browser Detect: http://www.quirksmode.org/js/detect.html
  */
 (function ($) {
 
