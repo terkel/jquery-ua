@@ -1,11 +1,9 @@
-/*
- * jQuery UA plugin v0.9.2
+/*!
+ * jQuery UA plugin v0.9.3
  * https://github.com/terkel/jquery-ua
  *
- * Copyright (c) 2011 Takeru Suzuki, http://terkel.jp/
- * Licensed under the MIT license: http://www.opensource.org/licenses/MIT
- *
- * Inspired by PPK's Browser Detect: http://www.quirksmode.org/js/detect.html
+ * Copyright (c) 2012 Takeru Suzuki - http://terkel.jp/
+ * Licensed under the MIT license - http://www.opensource.org/licenses/MIT
  */
 (function ($) {
 
@@ -14,11 +12,11 @@
     var ua = navigator.userAgent.toLowerCase(),
         platforms = [
             { name: 'win',        version: 'windows(?: nt)? ', versionNames: [
-                //{ number: '6.2',  name: 'win8' },
+                { number: '6.2',  name: 'win8' },
                 { number: '6.1',  name: 'win7' },
-                { number: '6.0',  name: 'winVista' },
-                { number: '5.2',  name: 'winXP' },
-                { number: '5.1',  name: 'winXP' },
+                { number: '6.0',  name: 'winvista' },
+                { number: '5.2',  name: 'winxp' },
+                { number: '5.1',  name: 'winxp' },
                 { number: '5.01', name: 'win2000' },
                 { number: '5.0',  name: 'win2000' }
             ]},
@@ -47,25 +45,20 @@
         b = $.ua.browser = detect(browsers),
         e = $.ua.engine = detect(engines);
 
-    $('html').addClass([
-        p.name,
-        p.versionName,
-        b.name,
-        b.name + b.versionMajor,
-        e.name,
-        e.name + e.versionMajor
-    ].join(' '));
-
     function detect (data) {
         var item = {},
             c,
+            re,
+            map,
             i,
             is,
             j,
             js;
         for (i = 0, is = data.length; i < is; i++) {
             c = data[i];
-            if (new RegExp(c.name).test(ua)) {
+            re = new RegExp(c.name);
+            map = c.versionNames;
+            if (re.test(ua)) {
                 item.name = c.name;
                 item[item.name] = true;
                 item.version = String((new RegExp(c.version + '(\\d+((\\.|_)\\d+)*)').exec(ua) || [, 0])[1]).replace(/_/g, '.');
@@ -74,10 +67,10 @@
                     item.mobile = /mobile|phone/.test(ua) || item.blackberry;
                     item.tablet = /tablet/.test(ua) || item.ipad || (item.android && !/mobile/.test(ua));
                 }
-                if (c.versionNames) {
-                    for (j = 0, js = c.versionNames.length; j < js; j++) {
-                        if (item.version === c.versionNames[j].number) {
-                            item.versionName = c.versionNames[j].name;
+                if (map) {
+                    for (j = 0, js = map.length; j < js; j++) {
+                        if (item.version === map[j].number) {
+                            item.versionName = map[j].name;
                             item[item.versionName] = true;
                             break;
                         }
@@ -87,12 +80,21 @@
             }
         }
         if (!item.name) {
-            item.name = 'unknown';
             item['unknown'] = true;
+            item.name = '';
             item.version = '';
             item.versionMajor = '';
         }
         return item;
     }
+
+    $('html').addClass([
+        p.name,
+        p.versionName,
+        b.name,
+        b.name + b.versionMajor,
+        e.name,
+        e.name + e.versionMajor
+    ].join(' '));
 
 })(jQuery);
