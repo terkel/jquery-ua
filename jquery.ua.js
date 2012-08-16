@@ -1,5 +1,5 @@
 /*!
- * jQuery UA plugin v0.9.4
+ * jQuery UA plugin v0.9.5
  * https://github.com/terkel/jquery-ua
  *
  * Copyright (c) 2012 Takeru Suzuki - http://terkel.jp/
@@ -22,7 +22,8 @@
                 item = {},
                 c,
                 re,
-                map,
+                flags,
+                versionNames,
                 i,
                 is,
                 j,
@@ -30,23 +31,32 @@
             for (i = 0, is = data.length; i < is; i++) {
                 c = data[i];
                 re = new RegExp(c.name);
-                map = c.versionNames;
+                flags = c.flags,
+                versionNames = c.versionNames;
                 if (re.test(ua)) {
                     item.name = c.name;
                     item[item.name] = true;
-                    item.version = String((new RegExp(c.version + '(\\d+((\\.|_)\\d+)*)').exec(ua) || [, 0])[1]).replace(/_/g, '.');
+                    item.version = String((new RegExp(c.versionSearch + '(\\d+((\\.|_)\\d+)*)').exec(ua) || [, 0])[1]).replace(/_/g, '.');
                     item.versionMajor = parseInt(item.version, 10);
-                    if (data === $.ua.data.platforms) {
-                        item.mobile = /mobile|phone/.test(ua) || item.blackberry;
-                        item.tablet = /tablet/.test(ua) || item.ipad || (item.android && !/mobile/.test(ua));
+                    if (flags) {
+                        for (j = 0, js = flags.length; j < js; j++) {
+                            item[flags[j]] = true;
+                        }
                     }
-                    if (map) {
-                        for (j = 0, js = map.length; j < js; j++) {
-                            if (item.version === map[j].number) {
-                                item.versionName = map[j].name;
+                    if (versionNames) {
+                        for (j = 0, js = versionNames.length; j < js; j++) {
+                            if ( new RegExp('^' + versionNames[j].number).test(item.version) ) {
+                                item.versionName = versionNames[j].name;
                                 item[item.versionName] = true;
                                 break;
                             }
+                        }
+                    }
+                    if (data === $.ua.data.platforms) {
+                        item.mobile = /mobile|phone/.test(ua) || item.blackberry;
+                        item.tablet = /tablet/.test(ua) || item.ipad || (item.android && !/mobile/.test(ua));
+                        if (item.ios) {
+                            item.versionName = 'ios' + item.versionMajor;
                         }
                     }
                     break;
@@ -63,35 +73,53 @@
 
         data: {
             platforms: [
-                { name: 'win',        version: 'windows(?: nt)? ', versionNames: [
-                    { number: '6.2',  name: 'win8' },
-                    { number: '6.1',  name: 'win7' },
-                    { number: '6.0',  name: 'winvista' },
-                    { number: '5.2',  name: 'winxp' },
-                    { number: '5.1',  name: 'winxp' },
-                    { number: '5.01', name: 'win2000' },
-                    { number: '5.0',  name: 'win2000' }
+                { name: 'win', versionSearch: 'windows(?: nt)? ', versionNames: [
+                    { number: '6.2', name: 'win8' },
+                    { number: '6.1', name: 'win7' },
+                    { number: '6.0', name: 'winvista' },
+                    { number: '5.2', name: 'winxp' },
+                    { number: '5.1', name: 'winxp' },
+                    { number: '5.0', name: 'win2000' }
                 ]},
-                { name: 'ipad',       version: 'cpu os ' }, // ipad and ipod must be tested before iphone
-                { name: 'ipod',       version: 'iphone os ' },
-                { name: 'iphone',     version: 'iphone os ' }, // iphone must be tested before mac
-                { name: 'mac',        version: 'os x ' },
-                { name: 'android',    version: 'android ' }, // android must be tested before linux
-                { name: 'blackberry', version: '(?:blackberry\\d{4}[a-z]?|version)/' },
+                { name: 'ipad',   versionSearch: 'cpu os ',    flags: ['ios'] }, // ipad and ipod must be tested before iphone
+                { name: 'ipod',   versionSearch: 'iphone os ', flags: ['ios'] },
+                { name: 'iphone', versionSearch: 'iphone os ', flags: ['ios'] }, // iphone must be tested before mac
+                { name: 'mac', versionSearch: 'os x ', versionNames: [
+                    { number: '10.8', name: 'mountainlion' },
+                    { number: '10.7', name: 'lion' },
+                    { number: '10.6', name: 'snowleopard' },
+                    { number: '10.5', name: 'leopard' },
+                    { number: '10.4', name: 'tiger' },
+                    { number: '10.3', name: 'panther' },
+                    { number: '10.2', name: 'jaguar' },
+                    { number: '10.1', name: 'puma' },
+                    { number: '10.0', name: 'cheetah' }
+                ]},
+                { name: 'android', versionSearch: 'android ', versionNames: [ // android must be tested before linux
+                    { number: '4.1', name: 'jellybean' },
+                    { number: '4.0', name: 'icecreamsandwich' },
+                    { number: '3.',  name: 'honeycomb' },
+                    { number: '2.3', name: 'gingerbread' },
+                    { number: '2.2', name: 'froyo' },
+                    { number: '2.',  name: 'eclair' },
+                    { number: '1.6', name: 'donut' },
+                    { number: '1.5', name: 'cupcake' }
+                ]},
+                { name: 'blackberry', versionSearch: '(?:blackberry\\d{4}[a-z]?|version)/' },
                 { name: 'linux' }
             ],
             browsers: [
-                { name: 'msie',    version: 'msie ' },
-                { name: 'firefox', version: 'firefox/' },
-                { name: 'chrome',  version: 'chrome/' }, // chrome must be tested before safari
-                { name: 'safari',  version: 'version/' },
-                { name: 'opera',   version: 'version/' }
+                { name: 'msie',    versionSearch: 'msie ' },
+                { name: 'firefox', versionSearch: 'firefox/' },
+                { name: 'chrome',  versionSearch: 'chrome/' }, // chrome must be tested before safari
+                { name: 'safari',  versionSearch: 'version/' },
+                { name: 'opera',   versionSearch: 'version/' }
             ],
             engines: [
-                { name: 'trident', version: 'trident/' },
-                { name: 'webkit',  version: 'webkit/' }, // webkit must be tested before gecko
-                { name: 'gecko',   version: 'rv:' },
-                { name: 'presto',  version: 'presto/' }
+                { name: 'trident', versionSearch: 'trident/' },
+                { name: 'webkit',  versionSearch: 'webkit/' }, // webkit must be tested before gecko
+                { name: 'gecko',   versionSearch: 'rv:' },
+                { name: 'presto',  versionSearch: 'presto/' }
             ]
         }
 
