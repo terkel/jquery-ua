@@ -31,7 +31,7 @@
             for (i = 0, is = data.length; i < is; i++) {
                 c = data[i];
                 re = new RegExp(c.name);
-                flags = c.flags,
+                flags = c.flags;
                 versionNames = c.versionNames;
                 if (re.test(ua)) {
                     item.name = c.name;
