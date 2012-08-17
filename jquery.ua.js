@@ -21,7 +21,8 @@
             var ua = navigator.userAgent.toLowerCase(),
                 item = {},
                 c,
-                re,
+                name,
+                versionSearch,
                 flags,
                 versionNames,
                 i,
@@ -30,13 +31,14 @@
                 js;
             for (i = 0, is = data.length; i < is; i++) {
                 c = data[i];
-                re = new RegExp(c.name);
+                name = c.name,
+                versionSearch = c.versionSearch,
                 flags = c.flags;
                 versionNames = c.versionNames;
-                if (re.test(ua)) {
-                    item.name = c.name;
+                if (ua.indexOf(name) !== -1) {
+                    item.name = name;
                     item[item.name] = true;
-                    item.version = String((new RegExp(c.versionSearch + '(\\d+((\\.|_)\\d+)*)').exec(ua) || [, 0])[1]).replace(/_/g, '.');
+                    item.version = String((new RegExp(versionSearch + '(\\d+((\\.|_)\\d+)*)').exec(ua) || [, 0])[1]).replace(/_/g, '.');
                     item.versionMajor = parseInt(item.version, 10);
                     if (flags) {
                         for (j = 0, js = flags.length; j < js; j++) {
@@ -45,7 +47,7 @@
                     }
                     if (versionNames) {
                         for (j = 0, js = versionNames.length; j < js; j++) {
-                            if ( new RegExp('^' + versionNames[j].number).test(item.version) ) {
+                            if (item.version.indexOf(versionNames[j].number) === 0) {
                                 item.versionName = versionNames[j].name;
                                 item[item.versionName] = true;
                                 break;
