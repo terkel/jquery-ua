@@ -32,8 +32,8 @@
                 jc;
             for (i = 0, is = data.length; i < is; i++) {
                 ic = data[i];
-                name = ic.name,
-                versionSearch = ic.versionSearch,
+                name = ic.name;
+                versionSearch = ic.versionSearch;
                 flags = ic.flags;
                 versionNames = ic.versionNames;
                 if (ua.indexOf(name) !== -1) {
