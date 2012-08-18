@@ -39,7 +39,7 @@
                 if (ua.indexOf(name) !== -1) {
                     item.name = name;
                     item[item.name] = true;
-                    item.version = String((new RegExp(versionSearch + '(\\d+((\\.|_)\\d+)*)').exec(ua) || [, 0])[1]).replace(/_/g, '.');
+                    item.version = ('' + (new RegExp(versionSearch + '(\\d+((\\.|_)\\d+)*)').exec(ua) || [, 0])[1]).replace(/_/g, '.');
                     item.versionMajor = parseInt(item.version, 10);
                     if (flags) {
                         for (j = 0, js = flags.length; j < js; j++) {
@@ -88,7 +88,7 @@
                 { name: 'ipad',   versionSearch: 'cpu os ',    flags: ['ios'] }, // ipad and ipod must be tested before iphone
                 { name: 'ipod',   versionSearch: 'iphone os ', flags: ['ios'] },
                 { name: 'iphone', versionSearch: 'iphone os ', flags: ['ios'] }, // iphone must be tested before mac
-                { name: 'mac', versionSearch: 'os x ', versionNames: [
+                { name: 'mac', versionSearch: 'os xx ', versionNames: [
                     { number: '10.8', name: 'mountainlion' },
                     { number: '10.7', name: 'lion' },
                     { number: '10.6', name: 'snowleopard' },
