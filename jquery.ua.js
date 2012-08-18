@@ -20,21 +20,22 @@
         detect: function (data) {
             var ua = navigator.userAgent.toLowerCase(),
                 item = {},
-                c,
                 name,
                 versionSearch,
                 flags,
                 versionNames,
                 i,
                 is,
+                ic,
                 j,
-                js;
+                js,
+                jc;
             for (i = 0, is = data.length; i < is; i++) {
-                c = data[i];
-                name = c.name,
-                versionSearch = c.versionSearch,
-                flags = c.flags;
-                versionNames = c.versionNames;
+                ic = data[i];
+                name = ic.name,
+                versionSearch = ic.versionSearch,
+                flags = ic.flags;
+                versionNames = ic.versionNames;
                 if (ua.indexOf(name) !== -1) {
                     item.name = name;
                     item[item.name] = true;
@@ -47,8 +48,9 @@
                     }
                     if (versionNames) {
                         for (j = 0, js = versionNames.length; j < js; j++) {
-                            if (item.version.indexOf(versionNames[j].number) === 0) {
-                                item.versionName = versionNames[j].name;
+                            jc = versionNames[j];
+                            if (item.version.indexOf(jc.number) === 0) {
+                                item.versionName = jc.name;
                                 item[item.versionName] = true;
                                 break;
                             }
