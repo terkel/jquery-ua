@@ -1,5 +1,5 @@
 /*!
- * jQuery UA plugin v0.9.6
+ * jQuery UA plugin v0.9.7
  * https://github.com/terkel/jquery-ua
  *
  * Copyright (c) 2012 Takeru Suzuki - http://terkel.jp/
@@ -37,7 +37,7 @@
                 flags = ic.flags;
                 versionNames = ic.versionNames;
                 if (ua.indexOf(name) !== -1) {
-                    item.name = name;
+                    item.name = name.replace(/\s/g, '');
                     item[item.name] = true;
                     item.version = ('' + (new RegExp(versionSearch + '(\\d+((\\.|_)\\d+)*)').exec(ua) || [, 0])[1]).replace(/_/g, '.');
                     item.versionMajor = parseInt(item.version, 10);
@@ -77,6 +77,9 @@
 
         data: {
             platforms: [
+                { name: 'windows phone', versionSearch: 'windows phone os ', versionNames: [ // windows phone must be tested before win
+                    { number: '7.5', name: 'mango' }
+                ]},
                 { name: 'win', versionSearch: 'windows(?: nt)? ', versionNames: [
                     { number: '6.2', name: 'win8' },
                     { number: '6.1', name: 'win7' },
@@ -113,11 +116,12 @@
                 { name: 'linux' }
             ],
             browsers: [
-                { name: 'msie',    versionSearch: 'msie ' },
-                { name: 'firefox', versionSearch: 'firefox/' },
-                { name: 'chrome',  versionSearch: 'chrome/' }, // chrome must be tested before safari
-                { name: 'safari',  versionSearch: 'version/' },
-                { name: 'opera',   versionSearch: 'version/' }
+                { name: 'iemobile', versionSearch: 'iemobile/' }, // iemobile must be tested before msie
+                { name: 'msie',     versionSearch: 'msie ' },
+                { name: 'firefox',  versionSearch: 'firefox/' },
+                { name: 'chrome',   versionSearch: 'chrome/' }, // chrome must be tested before safari
+                { name: 'safari',   versionSearch: 'version/' },
+                { name: 'opera',    versionSearch: 'version/' }
             ],
             engines: [
                 { name: 'trident', versionSearch: 'trident/' },
