@@ -106,6 +106,9 @@
                     { number: '10.0', name: 'cheetah' }
                 ]},
                 { name: 'android', versionSearch: 'android ', versionNames: [ // android must be tested before linux
+                    { number: '4.4', name: 'kitkat' },
+                    { number: '4.3', name: 'jellybean' },
+                    { number: '4.2', name: 'jellybean' },
                     { number: '4.1', name: 'jellybean' },
                     { number: '4.0', name: 'icecreamsandwich' },
                     { number: '3.',  name: 'honeycomb' },
