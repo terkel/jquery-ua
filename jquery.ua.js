@@ -92,6 +92,8 @@
                 { name: 'ipod',   versionSearch: 'iphone os ', flags: ['ios'] },
                 { name: 'iphone', versionSearch: 'iphone os ', flags: ['ios'] }, // iphone must be tested before mac
                 { name: 'mac', versionSearch: 'os x ', versionNames: [
+                    { number: '10.10', name: 'yosemite' },
+                    { number: '10.9', name: 'mavericks' },
                     { number: '10.8', name: 'mountainlion' },
                     { number: '10.7', name: 'lion' },
                     { number: '10.6', name: 'snowleopard' },
