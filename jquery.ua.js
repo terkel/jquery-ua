@@ -78,9 +78,15 @@
         data: {
             platforms: [
                 { name: 'windows phone', versionSearch: 'windows phone os ', versionNames: [ // windows phone must be tested before win
-                    { number: '7.5', name: 'mango' }
+                    { number: '8.1', name: 'blue' },
+                    { number: '8', name: 'apollo' },
+                    { number: '7.8', name: 'mango' },
+                    { number: '7.5', name: 'mango' },
+                    { number: '7', name: 'photon' }
                 ]},
                 { name: 'win', versionSearch: 'windows(?: nt)? ', versionNames: [
+                    { number: '10.0', name: 'win10' }, // Windows 10 Final Release
+                    { number: '6.4', name: 'win10 TechnicalPreview' }, // Windows 10 Preview Release
                     { number: '6.3', name: 'win81' },
                     { number: '6.2', name: 'win8' },
                     { number: '6.1', name: 'win7' },
@@ -93,6 +99,8 @@
                 { name: 'ipod',   versionSearch: 'iphone os ', flags: ['ios'] },
                 { name: 'iphone', versionSearch: 'iphone os ', flags: ['ios'] }, // iphone must be tested before mac
                 { name: 'mac', versionSearch: 'os x ', versionNames: [
+                    { number: '10.12', name: 'sierra' },
+                    { number: '10.11', name: 'elcapitan' },
                     { number: '10.10', name: 'yosemite' },
                     { number: '10.9', name: 'mavericks' },
                     { number: '10.8', name: 'mountainlion' },
@@ -106,6 +114,9 @@
                     { number: '10.0', name: 'cheetah' }
                 ]},
                 { name: 'android', versionSearch: 'android ', versionNames: [ // android must be tested before linux
+                    { number: '7.', name: 'nougat' },
+                    { number: '6.', name: 'marshmallow' },
+                    { number: '5.', name: 'lollipop' },
                     { number: '4.4', name: 'kitkat' },
                     { number: '4.3', name: 'jellybean' },
                     { number: '4.2', name: 'jellybean' },
