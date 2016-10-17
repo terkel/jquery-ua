@@ -1,5 +1,5 @@
 /*!
- * jQuery UA plugin v0.9.8
+ * jQuery UA plugin v0.10.0
  * https://github.com/terkel/jquery-ua
  *
  * Copyright (c) 2014 Takeru Suzuki - http://terkel.jp/
