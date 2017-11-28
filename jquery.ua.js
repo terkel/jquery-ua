@@ -99,6 +99,7 @@
                 { name: 'ipod',   versionSearch: 'iphone os ', flags: ['ios'] },
                 { name: 'iphone', versionSearch: 'iphone os ', flags: ['ios'] }, // iphone must be tested before mac
                 { name: 'mac', versionSearch: 'os x ', versionNames: [
+                    { number: '10.13', name: 'highsierra' },
                     { number: '10.12', name: 'sierra' },
                     { number: '10.11', name: 'elcapitan' },
                     { number: '10.10', name: 'yosemite' },
@@ -114,6 +115,7 @@
                     { number: '10.0', name: 'cheetah' }
                 ]},
                 { name: 'android', versionSearch: 'android ', versionNames: [ // android must be tested before linux
+                    { number: '8.', name: 'oreo' },
                     { number: '7.', name: 'nougat' },
                     { number: '6.', name: 'marshmallow' },
                     { number: '5.', name: 'lollipop' },
