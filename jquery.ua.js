@@ -2,7 +2,7 @@
  * jQuery UA plugin v0.10.0
  * https://github.com/terkel/jquery-ua
  *
- * Copyright (c) 2014 Takeru Suzuki - http://terkel.jp/
+ * Copyright (c) Takeru Suzuki - http://terkel.jp/
  * Licensed under the MIT license - http://www.opensource.org/licenses/MIT
  */
 (function ($) {
