@@ -1,5 +1,5 @@
 /*!
- * jQuery UA plugin v0.11.0
+ * jQuery UA plugin v0.12.0
  * https://github.com/terkel/jquery-ua
  *
  * Copyright (c) Takeru Suzuki - http://terkel.jp/
@@ -99,6 +99,7 @@
                 { name: 'ipod',   versionSearch: 'iphone os ', flags: ['ios'] },
                 { name: 'iphone', versionSearch: 'iphone os ', flags: ['ios'] }, // iphone must be tested before mac
                 { name: 'mac', versionSearch: 'os x ', versionNames: [
+                    { number: '10.14', name: 'mojave' },
                     { number: '10.13', name: 'highsierra' },
                     { number: '10.12', name: 'sierra' },
                     { number: '10.11', name: 'elcapitan' },
@@ -115,6 +116,7 @@
                     { number: '10.0', name: 'cheetah' }
                 ]},
                 { name: 'android', versionSearch: 'android ', versionNames: [ // android must be tested before linux
+                    { number: '9.', name: 'pie' },
                     { number: '8.', name: 'oreo' },
                     { number: '7.', name: 'nougat' },
                     { number: '6.', name: 'marshmallow' },
