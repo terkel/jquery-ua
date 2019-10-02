@@ -117,6 +117,7 @@
                     { number: '10.0', name: 'cheetah' }
                 ]},
                 { name: 'android', versionSearch: 'android ', versionNames: [ // android must be tested before linux
+                    { number: '10.', name: '10' },
                     { number: '9.', name: 'pie' },
                     { number: '8.', name: 'oreo' },
                     { number: '7.', name: 'nougat' },
